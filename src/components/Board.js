@@ -4,7 +4,7 @@ import "./Board.css";
 
 export class Board extends Component {
   renderSquare(i) {
-    return <Square />;
+    return <Square value={i} />;
   }
 
   render() {
