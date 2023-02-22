@@ -4,18 +4,20 @@ import "./Board.css";
 
 const Board = () => {
   const [squares, setSquares] = useState(Array(9).fill(null));
+  const [toggleValue, setToggleValue] = useState(true);
 
   const handleClick = (i) => {
     const newSquares = squares.slice();
-    newSquares[i] = "X";
+    newSquares[i] = toggleValue ? "X" : "O";
     setSquares(newSquares);
+    setToggleValue((prev) => !prev);
   };
 
   const renderSquare = (i) => {
     return <Square value={squares[i]} onClick={() => handleClick(i)} />;
   };
 
-  const status = "Next player: X,O";
+  const status = `Next Player : ${toggleValue ? "X" : "O"}`;
 
   return (
     <div>
