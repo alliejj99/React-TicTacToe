@@ -5,6 +5,7 @@ import "./App.css";
 function App() {
   const [history, setHistory] = useState([{ squares: Array(9).fill(null) }]);
   const [toggleValue, setToggleValue] = useState(true);
+  const [stepNumber, setStepNumber] = useState(0);
 
   const calculateWinner = (squares) => {
     const lines = [
@@ -31,7 +32,7 @@ function App() {
     return null;
   };
 
-  const current = history[history.length - 1]; // item이 3개일때 첫번째의 초기값을 제외하기 위해 -1
+  const current = history[stepNumber];
   const winner = calculateWinner(current.squares);
   let status;
   if (winner) {
@@ -41,14 +42,38 @@ function App() {
   }
 
   const handleClick = (i) => {
-    const newSquares = current.squares.slice();
+    const newHistory = history.slice(0, stepNumber + 1); // history 저장
+    const newCurrent = newHistory[newHistory.length - 1]; // histor에 저장된 내용 앞으로 이동
+    const newSquares = newCurrent.squares.slice(); // 버튼 클릭했던 해당 시점으로 배열 불러오기
     if (calculateWinner(newSquares) || newSquares[i]) {
       return;
     }
     newSquares[i] = toggleValue ? "X" : "O";
-    setHistory([...history, { squares: newSquares }]);
+    setHistory([...newHistory, { squares: newSquares }]);
     setToggleValue((prev) => !prev);
+
+    setStepNumber(newHistory.length);
   };
+
+  const jumpTo = (step) => {
+    setStepNumber(step);
+    setToggleValue(step % 2 === 0);
+    /* setToggleValue(step % 2 === 0);
+     * => stepNumber를 업데이트 하기 위해 jumpto를 정의해주기
+     * stepNumber가 짝수일 때마다 toggleValue를 true로 설정
+     */
+  };
+
+  const moves = history.map((step, move) => {
+    const desc = move ? "Go To Move #" + move : "Go To Game Reset";
+    return (
+      <li key={move}>
+        <button className="move-button " onClick={() => jumpTo(move)}>
+          {desc}
+        </button>
+      </li>
+    );
+  });
 
   return (
     <div className="game">
@@ -57,6 +82,7 @@ function App() {
       </div>
       <div className="game-info">
         <div className="status">{status}</div>
+        <ul>{moves}</ul>
       </div>
     </div>
   );

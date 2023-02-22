@@ -1,7 +1,27 @@
 .game {
   display: flex;
-  /* flex-direction: row; */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 .game-info {
-  margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 16px;
+}
+.move-button {
+  width: 200px;
+  margin-bottom: 10px;
+  padding: 10px 20px;
+  text-decoration: none;
+  font-weight: 200;
+  border-width: 0;
+  border-radius: 5px;
+  color: white;
+  background-color: #27ae60;
+  cursor: pointer;
 }

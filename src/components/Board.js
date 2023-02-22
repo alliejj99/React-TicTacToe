@@ -13,7 +13,7 @@ const Board = ({ squares, onClick }) => {
   }, []);
 
   return (
-    <React.Fragment>
+    <div className="board-wrapper">
       <div className="board">
         {board.map((i) => {
           return (
@@ -23,7 +23,7 @@ const Board = ({ squares, onClick }) => {
           );
         })}
       </div>
-    </React.Fragment>
+    </div>
   );
 };
 
